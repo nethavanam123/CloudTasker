@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - CloudTasker</title>
+    <link rel="icon" href="/static/favicon.ico" />
+    <script type="module" src="/static/firebase-login1.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 2rem;
+        }
+        #login-box {
+            max-width: 300px;
+        }
+        input, button {
+            width: 100%;
+            margin-top: 0.5rem;
+            padding: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <h2>Login</h2>
+    <div id="login-box">
+        <input type="email" id="email" placeholder="Email" required><br>
+        <input type="password" id="password" placeholder="Password" required><br>
+        <button id="login">Login</button>
+        <p>Don't have an account? <a href="/register">Register</a></p>
+    </div>
+    <button id="sign-out" hidden>Logout</button>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard | CloudTasker</title>
+    <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+    <script type="module" src="/static/firebase-login1.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 2rem;
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        button {
+            margin: 0.5rem;
+            padding: 0.6rem 1.2rem;
+        }
+        .board-list {
+            margin-top: 2rem;
+            text-align: left;
+        }
+        .board-item {
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        {% if user_token %}
+            <h1>Welcome to CloudTasker</h1>
+            <p>Hello, <strong>{{ user_token.email }}</strong>! You are logged in.</p>
+            <button id="sign-out">Sign Out</button>
+
+            <!-- Displaying boards that the user has access to -->
+            <div class="board-list">
+                <h3>Your Task Boards</h3>
+                {% if boards %}
+                    <ul>
+                        {% for board in boards %}
+                            <li class="board-item">
+                                <a href="/task-board/{{ board.id }}">{{ board.title }}</a>
+                                {% if board.created_by == user_token.id %}
+                                    <!-- Options for the creator of the board -->
+                                    <form action="/task-board/{{ board.id }}/rename" method="post" style="display:inline;">
+                                        <input type="text" name="new_title" placeholder="Rename board" required>
+                                        <button type="submit">Rename</button>
+                                    </form>
+
+                                    <form action="/task-board/{{ board.id }}/add-user" method="post" style="display:inline;">
+                                        <input type="email" name="user_email" placeholder="Add user by email" required>
+                                        <button type="submit">Add User</button>
+                                    </form>
+                                {% endif %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>You don't have any task boards yet.</p>
+                {% endif %}
+            </div>
+        {% else %}
+            <h1>CloudTasker</h1>
+            <p>You are not logged in.</p>
+            <a href="/login"><button>Go to Login</button></a>
+            <a href="/register"><button>Go to Register</button></a>
+        {% endif %}
+    </div>
+</body>
+</html>
